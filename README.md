@@ -4,7 +4,7 @@
 > Quantitative investment pipeline using Medallion Architecture, Markowitz Portfolio Optimization and automated interactive dashboard.  
 > **Backtesting result: +1,821% return vs +300% S&P 500 (10-year period)**
 
-![Dashboard Preview](dashboard_preview.png)
+![Dashboard Preview](dashboard investment-optimization-medallion.JPG)
 
 ---
 
