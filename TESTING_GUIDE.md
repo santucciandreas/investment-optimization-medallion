@@ -7,7 +7,7 @@
 ## 🚀 Cómo correr el proyecto
 
 1. Abrí el notebook en Google Colab:  
-[![Open in Colab](https://colab.research.google.com/github/santucciandreas/investment-optimization-medallion/blob/main/optimizadordeinversiones_usuario.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/santucciandreas/investment-optimization-medallion/blob/main/optimizadordeinversiones_usuario.ipynb)
 
 2. Ejecutá **todas las celdas en orden** (`Runtime > Run all`)
 
