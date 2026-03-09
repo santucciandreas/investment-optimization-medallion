@@ -1,123 +1,127 @@
-# investment-optimization-medallion
-# 📊 Investment Optimization System — Medallion Architecture
+# ⬡ Optimización de Inversiones — Arquitectura Medallion
 
-> Quantitative investment pipeline using Medallion Architecture, Markowitz Portfolio Optimization and automated interactive dashboard.  
-> **Backtesting result: +1,821% return vs +300% S&P 500 (10-year period)**
+> Sistema cuantitativo de optimización de carteras que utiliza 10 años de datos reales del mercado para encontrar la estrategia de inversión óptima para cualquier sector o conjunto de acciones personalizado.
 
-![Dashboard Preview](dashboard%20investment-optimization-medallion.JPG)
+[![Investment Optimizer · Streamlit](https://img.shields.io/badge/▶%20Abrir%20App%20·%20Investment%20Optimizer-00E5FF?style=for-the-badge&logo=streamlit&logoColor=white)](https://optimizador-inversiones-ugcj2punrczubgsdi2oeij.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.10+-FFD700?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![License](https://img.shields.io/badge/Licencia-MIT-00FFB3?style=for-the-badge)](LICENSE)
 
 ---
 
-## 🏛️ Architecture Overview
+## 🧪 Probá la App
+
+No necesitás instalar nada. Entrá directamente a la app, seleccioná un sector o ingresá tus propias acciones, indicá el monto a invertir y obtené tu estrategia óptima en segundos.
+
+📄 [Ver guía de testing completa](./TESTING_GUIDE.md)
+
+---
+
+## 🏗️ Arquitectura Medallion
+
+El proyecto sigue una arquitectura de datos **Bronze → Silver → Gold**, transformando datos crudos del mercado en estrategias de inversión accionables.
 
 ```
-Bronze Layer  →  Silver Layer  →  Gold Layer  →  Dashboard
-(Raw Data)       (Clean Data)     (Strategy)      (Plotly HTML)
-```
-
-| Layer | Description |
-|-------|-------------|
-| 🥉 **Bronze** | Raw historical data ingested from yFinance API (10 years, 10 assets) |
-| 🥈 **Silver** | Cleaned data + financial metrics calculated via SQL Window Functions |
-| 🥇 **Gold** | Markowitz Optimization, Sharpe Ratio maximization, backtesting |
-| 📊 **Dashboard** | Auto-generated interactive HTML dashboard (Plotly) |
-
----
-
-## 📈 Results
-
-| Metric | Value |
-|--------|-------|
-| 💰 Initial Capital | $10,000 USD |
-| 💎 Final Capital | $192,025 USD |
-| 📈 Strategy Return | +1,821% |
-| 📉 S&P 500 Return | +300% |
-| ⚡ Alpha Generated | +1,521% |
-| 🛡️ Max Drawdown | -29.22% |
-| ✖️ Strategy Multiplier | 19.2x |
-| ✖️ S&P 500 Multiplier | 4.0x |
-
----
-
-## 🗂️ Asset Selection
-
-| Sector | Assets |
-|--------|--------|
-| Technology & Growth | Apple (AAPL), Microsoft (MSFT), Google (GOOGL), Nvidia (NVDA), Meta (META) |
-| Finance | JPMorgan (JPM) |
-| Energy | ExxonMobil (XOM) |
-| Consumer & Disruption | Amazon (AMZN), Tesla (TSLA) |
-| Safe Haven | Gold ETF (GLD) |
-
----
-
-## 📊 Dashboard
-
-The dashboard is automatically generated every time the code runs. It includes:
-
-- **KPI Cards** — Final Capital, Max Drawdown, Strategy & S&P 500 Multipliers
-- **Line Chart** — Strategy vs S&P 500 cumulative growth (year by year)
-- **Bar Chart** — Profit generated per sector
-- **Pie Chart** — Optimal portfolio allocation per asset
-
-No additional setup needed — just run the notebook and the HTML is generated automatically.
-
----
-
-## 🛠️ Tech Stack
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-SQLite-003B57?style=flat&logo=sqlite&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white)
-![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=flat&logo=plotly&logoColor=white)
-
-| Tool | Usage |
-|------|-------|
-| **Python** | Core language for data processing and quantitative modeling |
-| **Pandas & NumPy** | Time series manipulation, returns and risk metrics |
-| **SQL (SQLite)** | Structured storage and analytical queries |
-| **yFinance API** | Automated historical market data ingestion |
-| **SciPy** | Markowitz portfolio optimization |
-| **Plotly** | Interactive dashboard generation |
-| **Google Colab** | Cloud execution environment |
-
----
-
-## 🚀 How to Run
-
-1. Open the notebook in **Google Colab**
-2. Mount your Google Drive when prompted
-3. Run all cells in order (`Runtime → Run all`)
-4. The dashboard will be generated automatically at the end
-
-```python
-# Output files generated automatically:
-# ├── bi_kpis.csv
-# ├── bi_pesos.csv
-# ├── bi_historico_anual.csv
-# ├── bi_rubros.csv
-# └── dashboard.html  ← Interactive dashboard
+📥 API Yahoo Finance
+        │
+        ▼
+┌───────────────────┐
+│   CAPA BRONZE     │  Datos OHLCV crudos · 10 años · Almacenamiento SQLite
+│  bronze_market    │  Precios de cierre ajustados + volumen
+│      _data        │  Formato largo · Todos los activos unificados
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│   CAPA SILVER     │  Cálculo de retornos diarios (función LAG)
+│  silver_market    │  Volumen promedio móvil 10 días
+│      _data        │  Integración sectorial via JOIN con Dim_Assets
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│    CAPA GOLD      │  Simulación de Montecarlo (5,000 carteras)
+│  gold_final       │  Maximización del Sharpe Ratio
+│    _metrics       │  Backtesting vs S&P 500 · Cálculo de Alpha
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│   APP STREAMLIT   │  Interfaz web interactiva
+│ + Dashboard HTML  │  Experiencia sin código para el usuario
+└───────────────────┘
 ```
 
 ---
 
-## 💡 Key Concepts
+## 🚀 Del Notebook a la App
 
-**Markowitz Portfolio Optimization** — Mathematical framework that finds the optimal asset allocation by maximizing return for a given level of risk (Efficient Frontier).
+El sistema evolucionó de un notebook de Google Colab a una **aplicación web completamente interactiva** accesible para cualquier usuario, sin necesidad de correr código.
 
-**Sharpe Ratio** — Risk-adjusted return metric. A higher Sharpe means better return per unit of risk taken.
-
-**Max Drawdown** — Maximum peak-to-trough decline. Measures portfolio resilience during market stress.
-
-**Alpha** — Excess return generated above the benchmark (S&P 500). Confirms the strategy adds real value over passive investing.
-
----
-
-## ⚠️ Disclaimer
-
-> This project is for **educational purposes only**. Past performance does not guarantee future results. This is not financial advice.
+| Versión | Descripción |
+|---------|-------------|
+| **Notebook** | Pipeline completo en Google Colab con capas SQL y dashboard HTML |
+| **App Streamlit** | Interfaz para el usuario con selector de sectores, acciones personalizadas, selector de moneda y optimización en vivo |
 
 ---
 
-*Built with Python · Data from Yahoo Finance · Architecture: Medallion (Bronze / Silver / Gold)*
+## 📊 Dashboard Automático
+
+El dashboard se genera automáticamente cada vez que se ejecuta el código. Incluye:
+
+- **KPI Cards** — Capital Final, Max Drawdown, Multiplicadores de la Estrategia y del S&P 500
+- **Gráfico de Líneas** — Crecimiento acumulado de la Estrategia vs S&P 500 (año a año)
+- **Gráfico de Barras** — Ganancia generada por sector
+- **Gráfico de Torta** — Distribución óptima del portafolio por activo
+
+No se requiere configuración adicional — solo ejecutá el notebook y el HTML se genera automáticamente.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Herramienta | Uso |
+|-------------|-----|
+| **Python** | Lenguaje principal para procesamiento de datos y modelado cuantitativo |
+| **Pandas & NumPy** | Manipulación de series de tiempo, retornos y métricas de riesgo |
+| **SQL (SQLite)** | Almacenamiento estructurado y consultas analíticas |
+| **yFinance API** | Ingesta automatizada de datos históricos del mercado |
+| **Montecarlo** | Optimización de carteras mediante simulación aleatoria |
+| **Plotly** | Generación de dashboards interactivos |
+| **Streamlit** | Framework para la aplicación web |
+| **Google Colab** | Entorno de ejecución en la nube |
+
+---
+
+## 📐 Conceptos Financieros Clave
+
+**Optimización de Markowitz** — Marco matemático que encuentra la asignación óptima de activos maximizando el retorno para un nivel de riesgo dado (Frontera Eficiente).
+
+**Sharpe Ratio** — Métrica de retorno ajustado por riesgo. Un Sharpe más alto significa mejor retorno por unidad de riesgo asumido.
+
+**Max Drawdown** — Máxima caída desde un pico histórico. Mide la resiliencia del portafolio durante períodos de estrés del mercado.
+
+**Alpha** — Retorno en exceso generado por encima del benchmark (S&P 500). Confirma que la estrategia agrega valor real frente a la inversión pasiva.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+investment-optimization-medallion/
+│
+├── optimizadordeinversiones_usuario.ipynb   # Notebook con el pipeline completo
+├── app.py                                   # Aplicación web Streamlit
+├── requirements.txt                         # Dependencias de Python
+├── TESTING_GUIDE.md                         # Cómo testear la app
+└── README.md                                # Este archivo
+```
+
+---
+
+## ⚠️ Aviso Legal
+
+Los resultados están basados en datos históricos y no garantizan rendimientos futuros. Este proyecto es únicamente con **fines educativos** y no debe considerarse asesoramiento financiero.
+
+---
+
+*Datos provistos por Yahoo Finance vía `yfinance`. Construido con Python, Streamlit y ❤️*
