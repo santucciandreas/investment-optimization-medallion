@@ -433,34 +433,39 @@ if correr:
     # ── SCATTER MONTECARLO ──
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">▸ Frontera Eficiente — Simulación Montecarlo (5,000 carteras)</div>', unsafe_allow_html=True)
-    fig4 = go.Figure()
-    fig4.add_trace(go.Scatter(
-        x=resultados[1]*100, y=resultados[0]*100,
-        mode='markers',
-        marker=dict(
-            size=3, color=resultados[2],
-            colorscale=[[0, '#1E3A4A'], [0.5, '#00B8CC'], [1, '#00FFB3']],
-            showscale=True,
-            colorbar=dict(title='Sharpe', tickfont=dict(color=C_TEXT), titlefont=dict(color=C_TEXT))
-        ),
-        name='Portafolios', hovertemplate='Volatilidad: %{x:.1f}%<br>Retorno: %{y:.1f}%<extra></extra>'
-    ))
-    fig4.add_trace(go.Scatter(
-        x=[resultados[1, idx]*100], y=[resultados[0, idx]*100],
-        mode='markers',
-        marker=dict(size=14, color=C_CYAN, symbol='star', line=dict(color='white', width=1)),
-        name='Óptimo (Max Sharpe)'
-    ))
-    fig4.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color=C_TEXT, family='Share Tech Mono'),
-        height=350, margin=dict(t=10, b=40, l=60, r=10),
-        xaxis=dict(title='Volatilidad Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
-        yaxis=dict(title='Retorno Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
-        legend=dict(orientation='h', x=0, y=1.1, bgcolor='rgba(0,0,0,0)'),
-        hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
-    )
-    st.plotly_chart(fig4, use_container_width=True)
+   fig4 = go.Figure()
+fig4.add_trace(go.Scatter(
+    x=resultados[1]*100, y=resultados[0]*100,
+    mode='markers',
+    marker=dict(
+        size=3,
+        color=resultados[2],
+        colorscale=[[0, '#1E3A4A'], [0.5, '#00B8CC'], [1, '#00FFB3']],
+        showscale=True,
+        colorbar=dict(
+            title=dict(text='Sharpe', font=dict(color=C_TEXT)),
+            tickfont=dict(color=C_TEXT)
+        )
+    ),
+    name='Portafolios',
+    hovertemplate='Volatilidad: %{x:.1f}%<br>Retorno: %{y:.1f}%<extra></extra>'
+))
+fig4.add_trace(go.Scatter(
+    x=[resultados[1, idx]*100], y=[resultados[0, idx]*100],
+    mode='markers',
+    marker=dict(size=14, color=C_CYAN, symbol='star', line=dict(color='white', width=1)),
+    name='Óptimo (Max Sharpe)'
+))
+fig4.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(color=C_TEXT, family='Share Tech Mono'),
+    height=350, margin=dict(t=10, b=40, l=60, r=10),
+    xaxis=dict(title='Volatilidad Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
+    yaxis=dict(title='Retorno Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
+    legend=dict(orientation='h', x=0, y=1.1, bgcolor='rgba(0,0,0,0)'),
+    hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
+)
+st.plotly_chart(fig4, use_container_width=True)
 
     # ── FOOTER ──
     st.markdown(f"""
