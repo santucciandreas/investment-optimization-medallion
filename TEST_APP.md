@@ -6,7 +6,7 @@
 
 ## 🚀 Acceder a la app
 
-[![Open App](https://img.shields.io/badge/▶%20Abrir%20App-Streamlit-00E5FF?style=for-the-badge&logo=streamlit&logoColor=white)](https://app-optimizadordeinversiones-f6tueugarxezsbdabq2w4y.streamlit.app)
+[![Open App](https://img.shields.io/badge/▶%20Open%20App-Streamlit-00E5FF?style=for-the-badge&logo=streamlit&logoColor=white)](https://app-optimizadordeinversiones-f6tueugarxezsbdabq2w4y.streamlit.app)
 
 ---
 
