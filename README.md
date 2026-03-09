@@ -12,7 +12,7 @@
 
 No necesitás instalar nada. Entrá directamente a la app, seleccioná un sector o ingresá tus propias acciones, indicá el monto a invertir y obtené tu estrategia óptima en segundos.
 
-📄 [Ver guía de testing completa](./TESTING_GUIDE.md)
+📄 [Ver guía de testing completa](./TEST_APP.md)
 
 ---
 
