@@ -1,95 +1,98 @@
-# 🧪 Guía de Testing — Estrategia de Inversión por Rubro
+# 🧪 Guía de Testing — Investment Optimizer
 
-> Probá el modelo con cualquier sector o conjunto de acciones cambiando **una sola línea de código**.
-
----
-
-## 🚀 Cómo correr el proyecto
-
-1. Abrí el apartado de "app optimizador de inversiones" 
-
-2. Elegi las acciones con las que quieras realizar una estrategia.
-
-3. Al finalizar se genera automáticamente el dashboard interactivo
+> Probá el sistema de optimización de carteras **sin instalar nada ni correr código**.
 
 ---
 
-## ✏️ Cómo testear con tu propio rubro
+## 🚀 Acceder a la app
 
-Buscá esta línea al inicio del notebook:
-
-```python
-# ✅ TOCÁS SOLO ESTO
-tickers = ['XOM', 'CVX', 'SLB', 'COP', 'EOG', 'PSX', 'MPC', 'VLO', 'OXY', 'BKR']
-```
-
-Reemplazá los tickers con las acciones que quieras analizar y volvé a ejecutar todo.
+[![Open App](https://img.shields.io/badge/▶%20Abrir%20App-Streamlit-00E5FF?style=for-the-badge&logo=streamlit&logoColor=white)](https://santucciandreas-investment-optimization-medallion-app.streamlit.app)
 
 ---
 
-## 📋 Ejemplos de rubros para testear
+## ¿Cómo funciona?
+
+El sistema descarga 10 años de datos reales de Yahoo Finance, calcula retornos diarios y corre una simulación de Montecarlo con 5,000 carteras para encontrar la **combinación óptima de acciones** que maximiza el Sharpe Ratio.
+
+---
+
+## ✏️ Cómo testearlo
+
+### Opción 1 — Sectores predefinidos
+1. Entrá a la app
+2. Seleccioná un sector del panel izquierdo (Energía, Tecnología, Bancos, etc.)
+3. Click en **▶ OPTIMIZAR CARTERA**
+4. Esperá ~30 segundos mientras descarga los datos
+5. Explorá los resultados
+
+### Opción 2 — Tickers personalizados
+1. Entrá a la app
+2. En el campo de texto ingresá tus propios tickers separados por coma
+3. Click en **▶ OPTIMIZAR CARTERA**
+
+---
+
+## 📋 Ejemplos para testear
 
 ### 💻 Tecnología
-```python
-tickers = ['AAPL', 'MSFT', 'GOOGL', 'NVDA', 'META', 'AMZN', 'AMD', 'AVGO', 'QCOM', 'INTC']
+```
+AAPL, MSFT, GOOGL, NVDA, META, AMZN, AMD, AVGO, QCOM, INTC
 ```
 
 ### 🏦 Bancos / Finanzas
-```python
-tickers = ['JPM', 'BAC', 'WFC', 'GS', 'MS', 'C', 'BLK', 'AXP', 'USB', 'PNC']
+```
+JPM, BAC, WFC, GS, MS, C, BLK, AXP, USB, PNC
 ```
 
 ### ⚡ Energía
-```python
-tickers = ['XOM', 'CVX', 'SLB', 'COP', 'EOG', 'PSX', 'MPC', 'VLO', 'OXY', 'BKR']
+```
+XOM, CVX, SLB, COP, EOG, PSX, MPC, VLO, OXY, BKR
 ```
 
 ### 🏥 Salud / Farmacéuticas
-```python
-tickers = ['JNJ', 'PFE', 'UNH', 'ABBV', 'MRK', 'LLY', 'TMO', 'ABT', 'DHR', 'BMY']
+```
+JNJ, PFE, UNH, ABBV, MRK, LLY, TMO, ABT, DHR, BMY
 ```
 
 ### 🛒 Consumo / Retail
-```python
-tickers = ['AMZN', 'WMT', 'COST', 'TGT', 'HD', 'LOW', 'NKE', 'MCD', 'SBUX', 'CMG']
+```
+AMZN, WMT, COST, TGT, HD, LOW, NKE, MCD, SBUX, CMG
 ```
 
 ### ⛏️ Minería / Materias Primas
-```python
-tickers = ['FCX', 'NEM', 'AA', 'CLF', 'MP', 'VALE', 'BHP', 'RIO', 'GOLD', 'WPM']
 ```
+FCX, NEM, AA, CLF, MP, VALE, BHP, RIO, GOLD, WPM
+```
+
+### 🌍 Cartera Diversificada Multi-Sector
+```
+AAPL, JPM, XOM, JNJ, WMT, NEM, MSFT, CVX, BAC, PFE
+```
+
+---
+
+## 📊 Qué muestra la app
+
+| Métrica | Descripción |
+|--------|-------------|
+| **Capital Final** | Valor de $10,000 USD invertidos hace 10 años |
+| **Retorno Total** | Rendimiento acumulado de la estrategia |
+| **Alpha vs S&P 500** | Ventaja (o desventaja) contra el mercado |
+| **Max Drawdown** | Mayor caída histórica del portafolio |
+| **Sharpe Ratio** | Retorno ajustado por riesgo |
+| **Backtesting** | Curva histórica vs S&P 500 |
+| **Pesos Óptimos** | Cuánto % invertir en cada acción |
+| **Frontera Eficiente** | Mapa de las 5,000 carteras simuladas |
 
 ---
 
 ## ⚠️ Consideraciones
 
-- Usá entre **8 y 12 tickers** para mejores resultados en la optimización
-- Evitá empresas **adquiridas o delistadas** (ej: PXD, HES) — yfinance no devuelve datos históricos completos
-- Los **ETFs** (GLD, SLV, XLK, etc.) funcionan pero no tienen sector/industry automático
-- El modelo descarga **10 años de datos históricos** — la primera ejecución puede tardar ~2 minutos
+- Usá entre **8 y 12 tickers** para mejores resultados
+- Evitá empresas **adquiridas o delistadas** — yfinance no devuelve datos completos
+- Los resultados son **históricos** y no garantizan rendimientos futuros
+- Solo con **fines educativos**
 
 ---
 
-## 📊 Qué genera el modelo
-
-| Output | Descripción |
-|--------|-------------|
-| **Matriz de correlación** | Qué tan relacionadas están las acciones entre sí |
-| **Pesos óptimos** | Cuánto % invertir en cada acción (Máximo Sharpe Ratio) |
-| **Backtesting** | Cómo hubiera rendido la estrategia en los últimos 10 años |
-| **vs S&P 500** | Comparación contra el mercado general |
-| **Dashboard** | Visualización interactiva exportada en HTML |
-
----
-
-## 🗂️ Arquitectura del Proyecto
-
-```
-Bronze Layer  →  Descarga raw data de Yahoo Finance (10 años)
-Silver Layer  →  Cálculo de retornos diarios + integración sectorial
-Gold Layer    →  Optimización Montecarlo + Backtesting + Dashboard
-```
-
----
-
-*Datos provistos por Yahoo Finance vía `yfinance`. Solo con fines educativos.*
+*Datos provistos por Yahoo Finance vía `yfinance`. Arquitectura Medallion (Bronze → Silver → Gold).*
