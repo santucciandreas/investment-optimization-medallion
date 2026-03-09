@@ -8,7 +8,7 @@
 
 1. Abrí el apartado de "app optimizador de inversiones" 
 
-2. Ejecutá **todas las celdas en orden** (`Runtime > Run all`)
+2. Elegi las acciones con las que quieras realizar una estrategia.
 
 3. Al finalizar se genera automáticamente el dashboard interactivo
 
