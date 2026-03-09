@@ -5,10 +5,7 @@
 ---
 
 ## 🚀 Acceder a la app
-
-[![Open App](https://img.shields.io/badge/▶%20Open%20App-Streamlit-00E5FF?style=for-the-badge&logo=streamlit&logoColor=white)](https://app-optimizadordeinversiones-f6tueugarxezsbdabq2w4y.streamlit.app)
-
----
+[![▶ Open App · Investment Optimizer](https://img.shields.io/badge/▶%20Open%20App%20·%20Investment%20Optimizer-00E5FF?style=for-the-badge&logo=streamlit&logoColor=white)](https://app-optimizadordeinversiones-f6tueugarxezsbdabq2w4y.streamlit.app)
 
 ## ¿Cómo funciona?
 
