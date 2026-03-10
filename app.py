@@ -347,13 +347,24 @@ if correr:
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">▸ Resultados de la Optimización</div>', unsafe_allow_html=True)
+    
+    def formatear_capital(valor, simbolo):
+    if valor >= 1_000_000_000:
+        return f"{simbolo}{valor/1_000_000_000:.2f}B"
+    elif valor >= 1_000_000:
+        return f"{simbolo}{valor/1_000_000:.2f}M"
+    elif valor >= 1_000:
+        return f"{simbolo}{valor/1_000:.1f}K"
+    else:
+        return f"{simbolo}{valor:,.0f}"
 
-    # ── KPIs ──
-    k1, k2, k3, k4, k5 = st.columns(5)
+        # ── KPIs ──
+        k1, k2, k3, k4, k5 = st.columns(5)
+   
     with k1:
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Capital Final</div>
-            <div class="kpi-value">${cap_final/1000:.1f}k</div>
+            <div class="kpi-value">{formatear_capital(cap_final, moneda_simbolo)}</div>
         </div>""", unsafe_allow_html=True)
     with k2:
         color = "kpi-value-green" if ret_port > 0 else "kpi-value-red"
