@@ -359,31 +359,36 @@ if correr:
     st.markdown('<div class="section-title">▸ Resultados de la Optimización</div>', unsafe_allow_html=True)
 
     # ── KPIs ──
-    k1, k2, k3, k4, k5 = st.columns(5)
+    k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Capital Final</div>
             <div class="kpi-value">{formatear_capital(cap_final, moneda_simbolo)}</div>
         </div>""", unsafe_allow_html=True)
     with k2:
+        st.markdown(f"""<div class="kpi-card">
+            <div class="kpi-label">// Capital Final S&P 500</div>
+            <div class="kpi-value kpi-value-red">{formatear_capital(df_comp['spy'].iloc[-1], moneda_simbolo)}</div>
+        </div>""", unsafe_allow_html=True)
+    with k3:
         color = "kpi-value-green" if ret_port > 0 else "kpi-value-red"
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Retorno Total</div>
             <div class="kpi-value {color}">{ret_port:.1f}%</div>
         </div>""", unsafe_allow_html=True)
-    with k3:
+    with k4:
         color_a = "kpi-value-green" if alpha > 0 else "kpi-value-red"
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Alpha vs S&P 500</div>
             <div class="kpi-value {color_a}">{alpha:+.1f}%</div>
         </div>""", unsafe_allow_html=True)
-    with k4:
+    with k5:
         color_dd = "kpi-value-red" if max_dd < -20 else "kpi-value-green"
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Max Drawdown</div>
             <div class="kpi-value {color_dd}">{max_dd:.1f}%</div>
         </div>""", unsafe_allow_html=True)
-    with k5:
+    with k6:
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Sharpe Ratio</div>
             <div class="kpi-value">{sharpe:.2f}</div>
