@@ -309,6 +309,15 @@ with col_btn[1]:
     correr = st.button("▶  OPTIMIZAR CARTERA", use_container_width=True)
 
 # ── RESULTADOS ─────────────────────────────────────────────────
+def formatear_capital(valor, simbolo):
+        if valor >= 1_000_000_000:
+            return f"{simbolo}{valor/1_000_000_000:.2f}B"
+        elif valor >= 1_000_000:
+            return f"{simbolo}{valor/1_000_000:.2f}M"
+        elif valor >= 1_000:
+            return f"{simbolo}{valor/1_000:.1f}K"
+        else:
+            return f"{simbolo}{valor:,.0f}"
 if correr:
     with st.spinner("Descargando datos de Yahoo Finance..."):
         df_prices = descargar_datos(tuple(tickers_finales))
@@ -348,15 +357,7 @@ if correr:
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">▸ Resultados de la Optimización</div>', unsafe_allow_html=True)
     
-    def formatear_capital(valor, simbolo):
-        if valor >= 1_000_000_000:
-            return f"{simbolo}{valor/1_000_000_000:.2f}B"
-        elif valor >= 1_000_000:
-            return f"{simbolo}{valor/1_000_000:.2f}M"
-        elif valor >= 1_000:
-            return f"{simbolo}{valor/1_000:.1f}K"
-        else:
-            return f"{simbolo}{valor:,.0f}"
+    
 
         # ── KPIs ──
         k1, k2, k3, k4, k5 = st.columns(5)
