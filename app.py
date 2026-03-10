@@ -349,14 +349,14 @@ if correr:
     st.markdown('<div class="section-title">▸ Resultados de la Optimización</div>', unsafe_allow_html=True)
     
     def formatear_capital(valor, simbolo):
-    if valor >= 1_000_000_000:
-        return f"{simbolo}{valor/1_000_000_000:.2f}B"
-    elif valor >= 1_000_000:
-        return f"{simbolo}{valor/1_000_000:.2f}M"
-    elif valor >= 1_000:
-        return f"{simbolo}{valor/1_000:.1f}K"
-    else:
-        return f"{simbolo}{valor:,.0f}"
+        if valor >= 1_000_000_000:
+            return f"{simbolo}{valor/1_000_000_000:.2f}B"
+        elif valor >= 1_000_000:
+            return f"{simbolo}{valor/1_000_000:.2f}M"
+        elif valor >= 1_000:
+            return f"{simbolo}{valor/1_000:.1f}K"
+        else:
+            return f"{simbolo}{valor:,.0f}"
 
         # ── KPIs ──
         k1, k2, k3, k4, k5 = st.columns(5)
