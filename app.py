@@ -233,6 +233,16 @@ def descargar_spy():
     spy = yf.download('SPY', start=start_date, end=end_date, progress=False)
     return spy['Close'].pct_change().dropna()
 
+def formatear_capital(valor, simbolo):
+    if valor >= 1_000_000_000:
+        return f"{simbolo}{valor/1_000_000_000:.2f}B"
+    elif valor >= 1_000_000:
+        return f"{simbolo}{valor/1_000_000:.2f}M"
+    elif valor >= 1_000:
+        return f"{simbolo}{valor/1_000:.1f}K"
+    else:
+        return f"{simbolo}{valor:,.0f}"
+
 # ── HEADER ─────────────────────────────────────────────────────
 st.markdown('<div class="header-title">⬡ Investment Optimizer</div>', unsafe_allow_html=True)
 st.markdown('<div class="header-sub">// OPTIMIZACIÓN DE CARTERAS · MONTECARLO · YAHOO FINANCE · 10 AÑOS DE DATOS</div>', unsafe_allow_html=True)
@@ -309,15 +319,6 @@ with col_btn[1]:
     correr = st.button("▶  OPTIMIZAR CARTERA", use_container_width=True)
 
 # ── RESULTADOS ─────────────────────────────────────────────────
-def formatear_capital(valor, simbolo):
-        if valor >= 1_000_000_000:
-            return f"{simbolo}{valor/1_000_000_000:.2f}B"
-        elif valor >= 1_000_000:
-            return f"{simbolo}{valor/1_000_000:.2f}M"
-        elif valor >= 1_000:
-            return f"{simbolo}{valor/1_000:.1f}K"
-        else:
-            return f"{simbolo}{valor:,.0f}"
 if correr:
     with st.spinner("Descargando datos de Yahoo Finance..."):
         df_prices = descargar_datos(tuple(tickers_finales))
@@ -356,12 +357,9 @@ if correr:
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">▸ Resultados de la Optimización</div>', unsafe_allow_html=True)
-    
-    
 
     # ── KPIs ──
     k1, k2, k3, k4, k5 = st.columns(5)
-
     with k1:
         st.markdown(f"""<div class="kpi-card">
             <div class="kpi-label">// Capital Final</div>
@@ -391,11 +389,11 @@ if correr:
             <div class="kpi-value">{sharpe:.2f}</div>
         </div>""", unsafe_allow_html=True)
 
-st.markdown('<hr class="divider">', unsafe_allow_html=True)
+    st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
     # ── GRÁFICOS ──
     col_g1, col_g2 = st.columns([2, 1])
-    
+
     with col_g1:
         st.markdown('<div class="section-title">▸ Backtesting vs S&P 500</div>', unsafe_allow_html=True)
         fig1 = go.Figure()
@@ -420,7 +418,7 @@ st.markdown('<hr class="divider">', unsafe_allow_html=True)
             hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
         )
         st.plotly_chart(fig1, use_container_width=True)
-    
+
     with col_g2:
         st.markdown('<div class="section-title">▸ Pesos Óptimos</div>', unsafe_allow_html=True)
         fig2 = go.Figure()
@@ -439,10 +437,10 @@ st.markdown('<hr class="divider">', unsafe_allow_html=True)
             showlegend=False
         )
         st.plotly_chart(fig2, use_container_width=True)
-    
+
     # ── DRAWDOWN + TABLA ──
     col_g3, col_g4 = st.columns([2, 1])
-    
+
     with col_g3:
         st.markdown('<div class="section-title">▸ Perfil de Riesgo — Drawdown Histórico</div>', unsafe_allow_html=True)
         drawdowns = ((crecimiento - crecimiento.cummax()) / crecimiento.cummax()) * 100
@@ -462,7 +460,7 @@ st.markdown('<hr class="divider">', unsafe_allow_html=True)
             showlegend=False
         )
         st.plotly_chart(fig3, use_container_width=True)
-    
+
     with col_g4:
         st.markdown('<div class="section-title">▸ Distribución de Pesos</div>', unsafe_allow_html=True)
         st.markdown(f"<span style='font-family:Share Tech Mono; font-size:11px; color:#546E7A'>BASE: {moneda_simbolo}{monto_usuario:,.0f} {moneda_code}</span>", unsafe_allow_html=True)
@@ -477,7 +475,7 @@ st.markdown('<hr class="divider">', unsafe_allow_html=True)
                 </div>
                 <div class="weight-bar" style="width:{pct}%"></div>
             """, unsafe_allow_html=True)
-    
+
     # ── SCATTER MONTECARLO ──
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-title">▸ Frontera Eficiente — Simulación Montecarlo (5,000 carteras)</div>', unsafe_allow_html=True)
@@ -512,7 +510,7 @@ st.markdown('<hr class="divider">', unsafe_allow_html=True)
         hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
     )
     st.plotly_chart(fig4, use_container_width=True)
-    
+
     # ── FOOTER ──
     st.markdown(f"""
     <div style="font-family:'Share Tech Mono'; font-size:10px; color:{C_SUB}; text-align:center; 
