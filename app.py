@@ -361,34 +361,34 @@ if correr:
         # ── KPIs ──
         k1, k2, k3, k4, k5 = st.columns(5)
    
-    with k1:
-        st.markdown(f"""<div class="kpi-card">
-            <div class="kpi-label">// Capital Final</div>
-            <div class="kpi-value">{formatear_capital(cap_final, moneda_simbolo)}</div>
-        </div>""", unsafe_allow_html=True)
-    with k2:
-        color = "kpi-value-green" if ret_port > 0 else "kpi-value-red"
-        st.markdown(f"""<div class="kpi-card">
-            <div class="kpi-label">// Retorno Total</div>
-            <div class="kpi-value {color}">{ret_port:.1f}%</div>
-        </div>""", unsafe_allow_html=True)
-    with k3:
-        color_a = "kpi-value-green" if alpha > 0 else "kpi-value-red"
-        st.markdown(f"""<div class="kpi-card">
-            <div class="kpi-label">// Alpha vs S&P 500</div>
-            <div class="kpi-value {color_a}">{alpha:+.1f}%</div>
-        </div>""", unsafe_allow_html=True)
-    with k4:
-        color_dd = "kpi-value-red" if max_dd < -20 else "kpi-value-green"
-        st.markdown(f"""<div class="kpi-card">
-            <div class="kpi-label">// Max Drawdown</div>
-            <div class="kpi-value {color_dd}">{max_dd:.1f}%</div>
-        </div>""", unsafe_allow_html=True)
-    with k5:
-        st.markdown(f"""<div class="kpi-card">
-            <div class="kpi-label">// Sharpe Ratio</div>
-            <div class="kpi-value">{sharpe:.2f}</div>
-        </div>""", unsafe_allow_html=True)
+        with k1:
+            st.markdown(f"""<div class="kpi-card">
+                <div class="kpi-label">// Capital Final</div>
+                <div class="kpi-value">{formatear_capital(cap_final, moneda_simbolo)}</div>
+            </div>""", unsafe_allow_html=True)
+        with k2:
+            color = "kpi-value-green" if ret_port > 0 else "kpi-value-red"
+            st.markdown(f"""<div class="kpi-card">
+                <div class="kpi-label">// Retorno Total</div>
+                <div class="kpi-value {color}">{ret_port:.1f}%</div>
+            </div>""", unsafe_allow_html=True)
+        with k3:
+            color_a = "kpi-value-green" if alpha > 0 else "kpi-value-red"
+            st.markdown(f"""<div class="kpi-card">
+                <div class="kpi-label">// Alpha vs S&P 500</div>
+                <div class="kpi-value {color_a}">{alpha:+.1f}%</div>
+            </div>""", unsafe_allow_html=True)
+        with k4:
+            color_dd = "kpi-value-red" if max_dd < -20 else "kpi-value-green"
+            st.markdown(f"""<div class="kpi-card">
+                <div class="kpi-label">// Max Drawdown</div>
+                <div class="kpi-value {color_dd}">{max_dd:.1f}%</div>
+            </div>""", unsafe_allow_html=True)
+        with k5:
+            st.markdown(f"""<div class="kpi-card">
+                <div class="kpi-label">// Sharpe Ratio</div>
+                <div class="kpi-value">{sharpe:.2f}</div>
+            </div>""", unsafe_allow_html=True)
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
