@@ -393,130 +393,130 @@ if correr:
 
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
-    # ── GRÁFICOS ──
-    col_g1, col_g2 = st.columns([2, 1])
-    
-    with col_g1:
-        st.markdown('<div class="section-title">▸ Backtesting vs S&P 500</div>', unsafe_allow_html=True)
-        fig1 = go.Figure()
-        fig1.add_trace(go.Scatter(
-            x=df_comp.index, y=df_comp['port'],
-            name='Estrategia', mode='lines',
-            line=dict(color=C_CYAN, width=2),
-            fill='tozeroy', fillcolor='rgba(0,229,255,0.05)'
-        ))
-        fig1.add_trace(go.Scatter(
-            x=df_comp.index, y=df_comp['spy'],
-            name='S&P 500', mode='lines',
-            line=dict(color=C_SUB, width=1.5, dash='dot')
-        ))
-        fig1.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color=C_TEXT, family='Share Tech Mono'),
-            height=300, margin=dict(t=10, b=30, l=50, r=10),
-            legend=dict(orientation='h', x=0, y=1.1, bgcolor='rgba(0,0,0,0)'),
-            xaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False),
-            yaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False, tickprefix='$'),
-            hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
-        )
-        st.plotly_chart(fig1, use_container_width=True)
-    
-    with col_g2:
-        st.markdown('<div class="section-title">▸ Pesos Óptimos</div>', unsafe_allow_html=True)
-        fig2 = go.Figure()
-        fig2.add_trace(go.Pie(
-            labels=tickers_ok,
-            values=mejores_pesos,
-            hole=0.45,
-            marker=dict(colors=COLORES[:len(tickers_ok)], line=dict(color=C_BG, width=2)),
-            textinfo='percent+label',
-            textfont=dict(size=10, color='#FFFFFF'),
-        ))
-        fig2.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color=C_TEXT, family='Share Tech Mono'),
-            height=300, margin=dict(t=10, b=10, l=10, r=10),
-            showlegend=False
-        )
-        st.plotly_chart(fig2, use_container_width=True)
-    
-    # ── DRAWDOWN + TABLA ──
-    col_g3, col_g4 = st.columns([2, 1])
-    
-    with col_g3:
-        st.markdown('<div class="section-title">▸ Perfil de Riesgo — Drawdown Histórico</div>', unsafe_allow_html=True)
-        drawdowns = ((crecimiento - crecimiento.cummax()) / crecimiento.cummax()) * 100
-        fig3 = go.Figure()
-        fig3.add_trace(go.Scatter(
-            x=drawdowns.index, y=drawdowns,
-            fill='tozeroy', fillcolor='rgba(255,23,68,0.2)',
-            line=dict(color=C_ROJO, width=1),
-            name='Drawdown'
-        ))
-        fig3.update_layout(
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color=C_TEXT, family='Share Tech Mono'),
-            height=250, margin=dict(t=10, b=30, l=50, r=10),
-            xaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False),
-            yaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False, ticksuffix='%'),
-            showlegend=False
-        )
-        st.plotly_chart(fig3, use_container_width=True)
-    
-    with col_g4:
-        st.markdown('<div class="section-title">▸ Distribución de Pesos</div>', unsafe_allow_html=True)
-        st.markdown(f"<span style='font-family:Share Tech Mono; font-size:11px; color:#546E7A'>BASE: {moneda_simbolo}{monto_usuario:,.0f} {moneda_code}</span>", unsafe_allow_html=True)
-        df_pesos = pd.DataFrame({'Acción': tickers_ok, 'Peso': mejores_pesos})
-        df_pesos = df_pesos.sort_values('Peso', ascending=False)
-        for _, row in df_pesos.iterrows():
-            pct = row['Peso'] * 100
-            st.markdown(f"""
-                <div class="weight-row">
-                    <span style="color:{C_CYAN}; font-family:'Share Tech Mono'">{row['Acción']}</span>
-                    <span style="color:{C_TEXT}">{pct:.1f}% — {moneda_simbolo}{monto_usuario * row['Peso']:,.0f}</span>
-                </div>
-                <div class="weight-bar" style="width:{pct}%"></div>
-            """, unsafe_allow_html=True)
-    
-    # ── SCATTER MONTECARLO ──
-    st.markdown('<hr class="divider">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">▸ Frontera Eficiente — Simulación Montecarlo (5,000 carteras)</div>', unsafe_allow_html=True)
-    fig4 = go.Figure()
-    fig4.add_trace(go.Scatter(
-        x=resultados[1]*100, y=resultados[0]*100,
-        mode='markers',
-        marker=dict(
-            size=3, color=resultados[2],
-            colorscale=[[0, '#1E3A4A'], [0.5, '#00B8CC'], [1, '#00FFB3']],
-            showscale=True,
-            colorbar=dict(
-                    title=dict(text='Sharpe', font=dict(color=C_TEXT)),
-                    tickfont=dict(color=C_TEXT)
-                )
-        ),
-        name='Portafolios', hovertemplate='Volatilidad: %{x:.1f}%<br>Retorno: %{y:.1f}%<extra></extra>'
+# ── GRÁFICOS ──
+col_g1, col_g2 = st.columns([2, 1])
+
+with col_g1:
+    st.markdown('<div class="section-title">▸ Backtesting vs S&P 500</div>', unsafe_allow_html=True)
+    fig1 = go.Figure()
+    fig1.add_trace(go.Scatter(
+        x=df_comp.index, y=df_comp['port'],
+        name='Estrategia', mode='lines',
+        line=dict(color=C_CYAN, width=2),
+        fill='tozeroy', fillcolor='rgba(0,229,255,0.05)'
     ))
-    fig4.add_trace(go.Scatter(
-        x=[resultados[1, idx]*100], y=[resultados[0, idx]*100],
-        mode='markers',
-        marker=dict(size=14, color=C_CYAN, symbol='star', line=dict(color='white', width=1)),
-        name='Óptimo (Max Sharpe)'
+    fig1.add_trace(go.Scatter(
+        x=df_comp.index, y=df_comp['spy'],
+        name='S&P 500', mode='lines',
+        line=dict(color=C_SUB, width=1.5, dash='dot')
     ))
-    fig4.update_layout(
+    fig1.update_layout(
         paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
         font=dict(color=C_TEXT, family='Share Tech Mono'),
-        height=350, margin=dict(t=10, b=40, l=60, r=10),
-        xaxis=dict(title='Volatilidad Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
-        yaxis=dict(title='Retorno Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
+        height=300, margin=dict(t=10, b=30, l=50, r=10),
         legend=dict(orientation='h', x=0, y=1.1, bgcolor='rgba(0,0,0,0)'),
+        xaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False),
+        yaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False, tickprefix='$'),
         hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
     )
-    st.plotly_chart(fig4, use_container_width=True)
-    
-    # ── FOOTER ──
-    st.markdown(f"""
-    <div style="font-family:'Share Tech Mono'; font-size:10px; color:{C_SUB}; text-align:center; 
-    margin-top:20px; padding-top:12px; border-top:1px solid #1E3A4A; letter-spacing:1px;">
-    // DATOS: YAHOO FINANCE · SIMULACIÓN: MONTECARLO 5,000 CARTERAS · {datetime.now().strftime('%d/%m/%Y')} · SOLO FINES EDUCATIVOS
-    </div>
-    """, unsafe_allow_html=True)
+    st.plotly_chart(fig1, use_container_width=True)
+
+with col_g2:
+    st.markdown('<div class="section-title">▸ Pesos Óptimos</div>', unsafe_allow_html=True)
+    fig2 = go.Figure()
+    fig2.add_trace(go.Pie(
+        labels=tickers_ok,
+        values=mejores_pesos,
+        hole=0.45,
+        marker=dict(colors=COLORES[:len(tickers_ok)], line=dict(color=C_BG, width=2)),
+        textinfo='percent+label',
+        textfont=dict(size=10, color='#FFFFFF'),
+    ))
+    fig2.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(color=C_TEXT, family='Share Tech Mono'),
+        height=300, margin=dict(t=10, b=10, l=10, r=10),
+        showlegend=False
+    )
+    st.plotly_chart(fig2, use_container_width=True)
+
+# ── DRAWDOWN + TABLA ──
+col_g3, col_g4 = st.columns([2, 1])
+
+with col_g3:
+    st.markdown('<div class="section-title">▸ Perfil de Riesgo — Drawdown Histórico</div>', unsafe_allow_html=True)
+    drawdowns = ((crecimiento - crecimiento.cummax()) / crecimiento.cummax()) * 100
+    fig3 = go.Figure()
+    fig3.add_trace(go.Scatter(
+        x=drawdowns.index, y=drawdowns,
+        fill='tozeroy', fillcolor='rgba(255,23,68,0.2)',
+        line=dict(color=C_ROJO, width=1),
+        name='Drawdown'
+    ))
+    fig3.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(color=C_TEXT, family='Share Tech Mono'),
+        height=250, margin=dict(t=10, b=30, l=50, r=10),
+        xaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False),
+        yaxis=dict(showgrid=True, gridcolor=C_GRID, zeroline=False, ticksuffix='%'),
+        showlegend=False
+    )
+    st.plotly_chart(fig3, use_container_width=True)
+
+with col_g4:
+    st.markdown('<div class="section-title">▸ Distribución de Pesos</div>', unsafe_allow_html=True)
+    st.markdown(f"<span style='font-family:Share Tech Mono; font-size:11px; color:#546E7A'>BASE: {moneda_simbolo}{monto_usuario:,.0f} {moneda_code}</span>", unsafe_allow_html=True)
+    df_pesos = pd.DataFrame({'Acción': tickers_ok, 'Peso': mejores_pesos})
+    df_pesos = df_pesos.sort_values('Peso', ascending=False)
+    for _, row in df_pesos.iterrows():
+        pct = row['Peso'] * 100
+        st.markdown(f"""
+            <div class="weight-row">
+                <span style="color:{C_CYAN}; font-family:'Share Tech Mono'">{row['Acción']}</span>
+                <span style="color:{C_TEXT}">{pct:.1f}% — {moneda_simbolo}{monto_usuario * row['Peso']:,.0f}</span>
+            </div>
+            <div class="weight-bar" style="width:{pct}%"></div>
+        """, unsafe_allow_html=True)
+
+# ── SCATTER MONTECARLO ──
+st.markdown('<hr class="divider">', unsafe_allow_html=True)
+st.markdown('<div class="section-title">▸ Frontera Eficiente — Simulación Montecarlo (5,000 carteras)</div>', unsafe_allow_html=True)
+fig4 = go.Figure()
+fig4.add_trace(go.Scatter(
+    x=resultados[1]*100, y=resultados[0]*100,
+    mode='markers',
+    marker=dict(
+        size=3, color=resultados[2],
+        colorscale=[[0, '#1E3A4A'], [0.5, '#00B8CC'], [1, '#00FFB3']],
+        showscale=True,
+        colorbar=dict(
+                title=dict(text='Sharpe', font=dict(color=C_TEXT)),
+                tickfont=dict(color=C_TEXT)
+            )
+    ),
+    name='Portafolios', hovertemplate='Volatilidad: %{x:.1f}%<br>Retorno: %{y:.1f}%<extra></extra>'
+))
+fig4.add_trace(go.Scatter(
+    x=[resultados[1, idx]*100], y=[resultados[0, idx]*100],
+    mode='markers',
+    marker=dict(size=14, color=C_CYAN, symbol='star', line=dict(color='white', width=1)),
+    name='Óptimo (Max Sharpe)'
+))
+fig4.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(color=C_TEXT, family='Share Tech Mono'),
+    height=350, margin=dict(t=10, b=40, l=60, r=10),
+    xaxis=dict(title='Volatilidad Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
+    yaxis=dict(title='Retorno Anual (%)', showgrid=True, gridcolor=C_GRID, zeroline=False),
+    legend=dict(orientation='h', x=0, y=1.1, bgcolor='rgba(0,0,0,0)'),
+    hoverlabel=dict(bgcolor=C_CARD2, font_color=C_CYAN)
+)
+st.plotly_chart(fig4, use_container_width=True)
+
+# ── FOOTER ──
+st.markdown(f"""
+<div style="font-family:'Share Tech Mono'; font-size:10px; color:{C_SUB}; text-align:center; 
+margin-top:20px; padding-top:12px; border-top:1px solid #1E3A4A; letter-spacing:1px;">
+// DATOS: YAHOO FINANCE · SIMULACIÓN: MONTECARLO 5,000 CARTERAS · {datetime.now().strftime('%d/%m/%Y')} · SOLO FINES EDUCATIVOS
+</div>
+""", unsafe_allow_html=True)
